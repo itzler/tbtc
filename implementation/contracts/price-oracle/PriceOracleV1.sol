@@ -1,14 +1,14 @@
 pragma solidity 0.4.25;
 
 import "../interfaces/IPriceOracle.sol";
-// import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "../vendor/thing.sol";
 import {SafeMath} from "../bitcoin-spv/SafeMath.sol";
 
 /**
  * The price oracle implements a simple price feed, managed
  * by a trusted operator.
  */
-contract PriceOracleV1 is IPriceOracle {
+contract PriceOracleV1 is IPriceOracle, DSThing {
     using SafeMath for uint128;
 
     // Price of BTC expressed in ETH, denominated in weis to satoshis.
@@ -37,7 +37,7 @@ contract PriceOracleV1 is IPriceOracle {
         return price;
     }
 
-    function updatePrice(uint128 _newPrice) external {
+    function updatePrice(uint128 _newPrice) external auth {
         // abs(1 - (p1 / p0)) > 0.01
         // p0 * 0.01 = minimum delta
         // 1% = 0.01 = 1/100
