@@ -1,0 +1,24 @@
+Truffle:
+- great for tests (artifact.require)
+- great for simple compilation
+- great for integrated deployment
+- horrible for package management (think .json artifacts)
+
+
+How to use dappsys with Truffle?
+Incorporate as NPM package.
+
+
+dappsys/*/src/*.sol | grep -v ".t.sol"
+
+cp dappsys/ds-auth/src/auth.sol vendor/
+cp dappsys/ds-thing/src/thing.sol vendor/
+cp dappsys/ds-guard/src/guard.sol vendor/
+cp dappsys/ds-note/src/note.sol vendor/
+cp dappsys/ds-roles/src/roles.sol vendor/
+cp dappsys/ds-proxy/src/proxy.sol vendor/
+
+
+### Using MakerDAO's Dapptool suite of contracts
+ - Issuing fine-grained ACL permissions on contracts. By default, contract methods can only be called by the contract and its creator. Explicit security that is simple to configure - see [an example from MakerDAO's codebase](https://sourcegraph.com/github.com/makerdao/sai/-/blob/src/fab.sol#L172)
+ - 
