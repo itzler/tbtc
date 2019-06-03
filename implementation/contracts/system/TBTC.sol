@@ -9,17 +9,23 @@ contract TBTCSystem {
     IPriceOracle priceOracle;
 
     constructor() {
-
     }
 
     setup() public {
         authority = new DSRoles();
         authority.setRootUser(this, true);
-        
-        // Create price oracle
-        // Dependency inversion is used here.
-        // priceOracle.setAuthority(authority)
-        // priceOracle.setOwner(this)
-        // priceOracle.permit(top, tub, S("cage(uint256,uint256)"));
+
+        // Price Oracle
+        // ------------
+        priceOracle.setAuthority(authority)
+        priceOracle.setOwner(this)
+
+        // Option 1. Using DSGuard
+        address priceOracleOperator;
+        priceOracle.permit(priceOracleOperator, priceOracle, S("updatePrice(uint128)"));
+
+        // Option 2. Using DSGuard
+        uint8 PRICE_ORACLE_OPERATOR_ROLE = 0;        
+        priceOracle.permit(PRICE_ORACLE_OPERATOR_ROLE, priceOracle, S("updatePrice(uint128)"));
     }
 }
