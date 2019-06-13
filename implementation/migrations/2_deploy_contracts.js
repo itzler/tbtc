@@ -28,26 +28,47 @@ const uniswap = require('../uniswap')
 const path = require('path')
 const child_process = require('child_process')
 
-async function deployUniswap() {
-  if(uniswap.getDeployments().Factory != "") {
-    console.log(`Uniswap already deployed - skipping`)
-    return;
-  }
+const UniswapFactory = artifacts.require('UniswapDeployment')
 
-  const uniswapDir = path.join(__dirname, '../uniswap')
+async function deployUniswap(deployer) {
+  // const uniswapDir = path.join(__dirname, '../uniswap')
 
-  await child_process.execFileSync(
-    path.join(uniswapDir, 'deploy.sh'),
-    { 
-      cwd: uniswapDir
-    }
-  );
+  // await child_process.execFileSync(
+  //   path.join(uniswapDir, 'deploy.sh'),
+  //   { 
+  //     cwd: uniswapDir
+  //   }
+  // );
+
+  let {
+    Exchange,
+    Factory
+  } = uniswap.getDeployments()
+  
+  // exchange proxy
+  // await Promise.all([
+  //   deployer.deploy(UniswapExchange, Exchange),
+  //   deployer.deploy(UniswapFactory, Factory)
+  // ])
+  
+  // await deployer.deploy(UniswapExchange, Exchange)
+
+  // // factory proxy
+  // await deployer.deploy(UniswapFactory, Factory)
+
+  await deployer.deploy(UniswapDeployment, Factory, Exchange)
+
+  return Factory;
 }
 
 module.exports = (deployer) => {
+  if(process.env.NODE_ENV == 'test') return Promise.resolve();
+  
   deployer.then(async () => {
+    let uniswapFactoryAddress;
+
     try {
-      await deployUniswap()
+      uniswapFactoryAddress = await deployUniswap(deployer)
     } catch(err) {
       throw new Error(`uniswap deployment failed: ${err}`)
     }
@@ -88,7 +109,7 @@ module.exports = (deployer) => {
     let tbtc = await deployer.deploy(TBTC)
 
     await tbtcSystem.setup(
-      uniswap.getDeployments().Factory,
+      uniswapFactoryAddress,
       tbtc.address
     );
  
