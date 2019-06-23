@@ -29,6 +29,7 @@ const path = require('path')
 const child_process = require('child_process')
 
 const UniswapDeployment = artifacts.require('UniswapDeployment')
+const UniswapFactory = artifacts.require('UniswapFactory')
 
 async function deployUniswap(deployer, network, accounts) {
   const uniswapDir = path.join(__dirname, '../uniswap')
@@ -54,6 +55,7 @@ async function deployUniswap(deployer, network, accounts) {
   
   // Save the deployed addresses to the UniswapDeployment contract
   await deployer.deploy(UniswapDeployment, factory.options.address, exchange.options.address)
+  await deployer.deploy(UniswapFactory, factory.options.address)
 
   return factory.options.address;
 }
