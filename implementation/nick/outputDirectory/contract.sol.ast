@@ -1,0 +1,35 @@
+PragmaDirective
+   Source: "pragma solidity ^0.5.6;"
+ContractDefinition "Contract"
+   Source: "contract Contract {\n    bytes arr;\n    \n    constructor() public {}\n    \n    function returnBytes() external view returns (bytes memory) {\n        return arr;\n    }\n}"
+  VariableDeclaration "arr"
+     Type: bytes storage ref
+     Source: "bytes arr"
+    ElementaryTypeName bytes
+       Source: "bytes"
+  FunctionDefinition "" - public
+     Source: "constructor() public {}"
+    ParameterList
+       Source: "()"
+    ParameterList
+       Source: ""
+    Block
+       Source: "{}"
+  FunctionDefinition "returnBytes" - public - const
+     Source: "function returnBytes() external view returns (bytes memory) {\n        return arr;\n    }"
+    ParameterList
+       Source: "()"
+    ParameterList
+       Source: "(bytes memory)"
+      VariableDeclaration ""
+         Type: bytes memory
+         Source: "bytes memory"
+        ElementaryTypeName bytes
+           Source: "bytes"
+    Block
+       Source: "{\n        return arr;\n    }"
+      Return
+         Source: "return arr"
+        Identifier arr
+           Type: bytes storage ref
+           Source: "arr"
