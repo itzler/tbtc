@@ -966,6 +966,10 @@ contract('Deposit', (accounts) => {
       const initialTokenBalance = await deployed.TBTCStub.getBalance(beneficiary)
 
       await testInstance.send(signerBond, { from: beneficiary })
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6419528... Fix js lint errors
       await deployed.TBTCSystemStub.setDepositOwner(0, beneficiary)
       const initialBalance = await web3.eth.getBalance(beneficiary)
 
