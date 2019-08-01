@@ -26,7 +26,7 @@ const TBTCSystem = artifacts.require('TBTCSystem')
 // keep
 const KeepBridge = artifacts.require('KeepBridge')
 const TBTCToken = artifacts.require('TBTCToken')
-const KeepRegistryAddress = '0xd04ed7D5C75cCC22DEafFD90A70c5BF932eC235e' // KeepRegistry contract address
+const KeepRegistryAddress = process.env.KEEP_REGISTRY_ADDRESS || '0x0000000000000000000000000000000000000000'
 
 // deposit factory
 const DepositFactory = artifacts.require('DepositFactory')
