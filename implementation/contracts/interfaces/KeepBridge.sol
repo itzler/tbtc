@@ -38,12 +38,10 @@ contract KeepBridge is IKeep {
         return false;
     }
 
-    function requestNewKeep(uint256 _m, uint256 _n) external payable returns (address _keepAddress){
-        address keepVendorAddress = KeepRegistry(keepRegistry)
-            .getVendor("ECDSAKeep");
-
-        _keepAddress = ECDSAKeepVendor(keepVendorAddress)
-            .openKeep(_n,_m, msg.sender);
+    function requestNewKeep(uint256 _m, uint256 _n) external payable returns (address _keepAddress) {
+        _keepAddress = KeepRegistry(keepRegistry).createECDSAKeep(
+            _n,_m
+        );
     }
 
     // get the result of a keep formation
@@ -74,25 +72,14 @@ contract KeepBridge is IKeep {
 /// @notice Interface for communication with `KeepRegistry` contract
 /// @dev It allows to call a function without the need of low-level call
 interface KeepRegistry {
-    /// @notice Get a keep vendor contract address for a keep type.
-    /// @param _keepType Keep type.
-    /// @return Keep vendor contract address.
-    function getVendor(string calldata _keepType) external view returns (address);
-}
-
-/// @notice Interface for communication with `ECDSAKeepVendor` contract
-/// @dev It allows to call a function without the need of low-level call
-interface ECDSAKeepVendor {
     /// @notice Open a new ECDSA keep.
     /// @param _groupSize Number of members in the keep.
     /// @param _honestThreshold Minimum number of honest keep members.
-    /// @param _owner Address of the keep owner.
     /// @return Opened keep address.
-    function openKeep(
+    function createECDSAKeep(
         uint256 _groupSize,
-        uint256 _honestThreshold,
-        address _owner
-    ) external payable returns (address keepAddress);
+        uint256 _honestThreshold
+    ) external payable returns (address keep);
 }
 
 /// @notice Interface for communication with `ECDSAKeep` contract
