@@ -1,0 +1,56 @@
+= On price feeds
+
+Price feeds are a difficult subject in decentralized systems.
+
+Price isn't a global phenomenon -- it's local to a transaction's participants,
+and stems from their subjective beliefs about the value of an asset and the
+current and future conditions of a market.
+
+At first glance, atop the fractured and subjective nature of price, we layer an
+additional conundrum -- the long-discussed "oracle problem". How can a group of
+pseudonymous actors be convinced to report the trust in a decentralized system,
+when they have a strong incentive to lie?
+
+Addressing these issues in the general case is far outside the scope of this
+document. Instead, we can discuss a few common approaches and how they perform
+in the context of a system like tBTC.
+
+There are three common approaches to bringing price data onto a blockchain like
+Ethereum
+
+1. Trusted oracles. If an entity or fixed group of entities can be trusted,
+   publishing trusted price data is simple.
+
+2. Schelling point games. These schemes make use of a large number of
+   participants with difficulty coordinating. Each participant submits their
+   version of the "truth", and those that differ significantly from the
+   plurality are punished, while those that reported with the herd are rewarded.
+   Truthcoin, Augur, Witnet, and UMA have all done interesting work in this
+   space; the Witnet team has written
+   https://medium.com/witnet/on-oracles-and-schelling-points-2a1807c29b73[an accessible primer].
+
+3. Market-based schemes. One of the surest ways to make price data accessible
+   to a chain is to bring trade execution onto that chain, using schemes like
+   batched auctions.
+
+In a system built to maintain a censorship-resistant supply peg, a trusted
+oracle requirement is deeply dissatisfying. A system is only as decentralized as
+it's most easily captured component; and a trusted price feed, even one that
+mixes data from many
+
+Schelling point games are an attractive alternative to trusted feeds. A
+Schelling point price feed enables permissionless participation, can better
+resist outside capture and censorship,
+
+The downside of a Schelling game approach is what Paul Sztorc calls "parasitic
+contracts". Expressive host chains enable "games outside the game" -- incentives
+that can warp honest reporting in Schelling games. Growing the size and money at
+risk of a reporter set can combat this issue; but when the security of an entire
+peg is at stake, imagining a large enough financial interest in honest price
+discovery is difficult.
+
+The last approach, utilizing on-chain markets, can enable direct price data on
+a smart contract chain. The devil, however, is in the details -- how does a
+scheme prevent miner tampering? How about fake volume and wash trades meant to
+manipulate a price? Market-based schemes need to be built to a particular use
+case, and are only as resilient as the participation in the market.

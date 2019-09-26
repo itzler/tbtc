@@ -130,7 +130,7 @@ between the signing bond collateral and BTC.
 
 In concrete terms, that means the price of ETH to BTC. Due to only needing
 prices for a single pair of assets, tBTC will initially use a simple
-<<price-oracle/index.adoc#price-oracle,price oracle>>.
+<<price-discovery/index.adoc#price-discovery,price oracle>>.
 
 == Undercollateralization
 
